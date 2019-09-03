@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:tools="http://schemas.android.com/tools" xmlns:android="http://schemas.android.com/apk/res/android">
+<!--button default background color-->
+<item>
+    <shape android:shape="rectangle">
+        <solid android:color="@android:color/transparent" />
+        <stroke android:color="@android:color/black" android:width="2dp" />
+        <corners android:radius="50dp"/>
+    </shape>
+</item>
+
+<!--button pressed state background color-->
+<item android:state_selected="true">
+    <shape android:shape="rectangle">
+        <solid android:color="#3339FF" />
+        <stroke android:color="#33B2FF" android:width="8dp" />
+        <corners android:radius="50dp"/>
+    </shape>
+</item>
+</selector>
