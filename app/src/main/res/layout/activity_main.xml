@@ -148,5 +148,41 @@
             android:layout_marginTop="656dp" app:layout_constraintEnd_toEndOf="parent"
             android:background="@drawable/button_style" app:layout_constraintHorizontal_bias="0.501"/>
 
+    <HorizontalScrollView
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:id="@+id/horizontalScrollView" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="5dp">
+        <LinearLayout
+                android:layout_width="100dp"
+                android:layout_height="50dp">
+            <TextView android:layout_width="100dp" android:layout_height="wrap_content"
+                    android:text="Maanantai\n2\u02DAc"
+
+                    />
+            <TextView android:layout_width="100dp" android:layout_height="wrap_content"
+                    android:text="Tiistai\n-4\u02DAc"
+                    />
+            <TextView android:layout_width="100dp" android:layout_height="wrap_content"
+                    android:text="Keskiviikko\n-3\u02DAc"
+                    />
+            <TextView android:layout_width="100dp" android:layout_height="wrap_content"
+                    android:text="Torstai\n2\u02DAc"
+                    />
+            <TextView android:layout_width="100dp" android:layout_height="wrap_content"
+                    android:text="Perjantai\n-2\u02DAc"
+                    />
+            <TextView android:layout_width="100dp" android:layout_height="wrap_content"
+                    android:text="Lauantai\n0\u02DAc"
+                    />
+            <TextView android:layout_width="100dp" android:layout_height="wrap_content"
+                    android:text="Sunnuntai\n-6\u02DAc"
+                    />
+
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
 
 </android.support.constraint.ConstraintLayout>
