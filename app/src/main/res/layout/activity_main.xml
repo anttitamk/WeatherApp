@@ -221,7 +221,7 @@
                     android:layout_height="wrap_content"
                     android:text="Sunnuntai\n-6\u02DAc"
                     android:textColor="@color/colorAccent"
-                    android:textSize="10sp" />
+                    android:textSize="14sp" />
 
 
         </LinearLayout>
