@@ -15,13 +15,16 @@ import android.text.Html
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
+import android.content.Intent
+
+
 
 
 class MainActivity : AppCompatActivity() {
-    private var city = "TAMPERE, FI"
+    private var city = "TAMPERE"
     /* Please Put your API KEY here */
     internal var OPEN_WEATHER_MAP_API = "1cd9b65e4fa1cbc737b84b34fdee088d"
-    /* Please Put your API KEY here */
+    private val cityAndCountryRows = FavouriteCities.getCities()
 
 
     override fun onCreate(savedInstanceState:Bundle?) {
@@ -29,13 +32,22 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.hide()
         setContentView(R.layout.activity_main)
 
+
+
+        // check whether default city or a favourite city should be used
+        val favouriteCity : String? = intent.getStringExtra("city")
+        if (favouriteCity != null) city = favouriteCity
+
+        // set favourite checkbox value
+        setFavouriteCheckboxValue(city)
+
         taskLoadUp(city)
 
+        // select city
         selectCity.setOnClickListener {
             val alertDialog = AlertDialog.Builder(this@MainActivity)
             alertDialog.setTitle("Select City")
             val input = EditText(this@MainActivity)
-            input.setText(city)
             val lp = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT)
@@ -52,25 +64,56 @@ class MainActivity : AppCompatActivity() {
             alertDialog.show()
         }
 
+        // refresh
         refreshButton.setOnClickListener {
             taskLoadUp(city)
         }
-    }
 
-
-    private fun taskLoadUp(query:String) {
-        if (Function.isNetworkAvailable(applicationContext))
-        {
-            val task = DownloadWeather()
-            task.execute(query)
+        // favourite cities view
+        cityList.setOnClickListener {
+            if (cityAndCountryRows.count() != 0)
+            {
+                val myIntent = Intent(baseContext, FavouriteCities::class.java)
+                startActivity(myIntent)
+            }
+            else
+            {
+                Toast.makeText(applicationContext, "There are no cities in favourites!", Toast.LENGTH_LONG).show()
+            }
         }
-        else
-        {
-            Toast.makeText(applicationContext, "No Internet Connection", Toast.LENGTH_LONG).show()
+
+        // adds city to favourites
+        add_to_favourites.setOnClickListener {
+
+            val cityAndCountryTextView = findViewById<TextView>(R.id.city_field)
+            val cityAndCountryString: String = cityAndCountryTextView.text.toString()
+            val cityAndCountryCode = cityAndCountryString.split(",")
+            val cityToFav = cityAndCountryCode[0]
+            val countryToFav = cityAndCountryCode[1].drop(1)
+
+            val cityCount = FavouriteCities.getCities().count()
+            setFavouriteCheckboxValue(cityToFav)
+
+            // add to favourites
+            if (!add_to_favourites.isChecked || cityCount == 0)
+            {
+                if (!cityAndCountryRows.any { row -> row.cityName == cityToFav})
+                {
+                    FavouriteCities.addToFavourites(cityToFav, countryToFav)
+                    setFavouriteCheckboxValue(cityToFav)
+                    Toast.makeText(applicationContext, "$cityToFav has been added to favourites!", Toast.LENGTH_LONG).show()
+                }
+                else Toast.makeText(applicationContext, "$cityToFav has already been added to favourites!", Toast.LENGTH_LONG).show()
+            }
+            // delete from favourites
+            else
+            {
+                FavouriteCities.deleteFromFavourites(cityToFav)
+                Toast.makeText(applicationContext, "$cityToFav has been deleted from favourites!", Toast.LENGTH_LONG).show()
+                setFavouriteCheckboxValue(cityToFav)
+            }
         }
     }
-
-
 
     internal inner class DownloadWeather:AsyncTask<String, Void, String>() {
         override fun onPreExecute() {
@@ -84,21 +127,21 @@ class MainActivity : AppCompatActivity() {
 
         override fun onPostExecute(xml: String) {
 
-            var cityField = city_field as TextView
-            var updatedField = updated_field as TextView
-            var detailsField = details_field as TextView
-            var currentTemperatureField = current_temperature_field as TextView
-            var weatherIcon = weather_icon as TextView
-            var weatherFont = Typeface.createFromAsset(assets, "fonts/weathericons-regular-webfont.ttf")
+            val cityField = city_field as TextView
+            val updatedField = updated_field as TextView
+            val detailsField = details_field as TextView
+            val currentTemperatureField = current_temperature_field as TextView
+            val weatherIcon = weather_icon as TextView
+            val weatherFont = Typeface.createFromAsset(assets, "fonts/weathericons-regular-webfont.ttf")
             weatherIcon.typeface = weatherFont
 
             try
             {
-                var json = JSONObject(xml)
+                val json = JSONObject(xml)
                 if (json != null) {
                     val details = json.getJSONArray("weather").getJSONObject(0)
                     val main = json.getJSONObject("main")
-                    var temperature = main.getDouble("temp")
+                    val temperature = main.getDouble("temp")
 
                     val current = ZonedDateTime.now(ZoneId.of("Europe/Helsinki"))
                     val formatter = DateTimeFormatter.ofPattern("dd.MM.yyy HH:mm")
@@ -118,23 +161,24 @@ class MainActivity : AppCompatActivity() {
 
                     loader.visibility = View.GONE
 
-                    var weathertype = details.getString("main")
+                    val weatherType = details.getString("main")
 
-                    when (weathertype) {
+                    when (weatherType) {
                         "Clear" -> screen.setBackgroundResource(R.drawable.clear_sky)
                         "Clouds" -> screen.setBackgroundResource(R.drawable.few_clouds)
                         "Scattered clouds" -> screen.setBackgroundResource(R.drawable.scattered_clouds)
                         "Broken clouds" -> screen.setBackgroundResource(R.drawable.broken_clouds)
                         "Shower rain" -> screen.setBackgroundResource(R.drawable.shower_rain)
-                        "Rain" -> screen.setBackgroundResource(R.drawable.rain)
+                        "Rain"  -> screen.setBackgroundResource(R.drawable.rain)
+                        "Drizzle"  -> screen.setBackgroundResource(R.drawable.rain)
                         "Thunderstorm" -> screen.setBackgroundResource(R.drawable.thunderstorm)
                         "Snow" -> screen.setBackgroundResource(R.drawable.snow)
                         "Mist" -> screen.setBackgroundResource(R.drawable.mist)
                         "Fog" -> screen.setBackgroundResource(R.drawable.mist)
                     }
 
-                    if (temperature < 0 && weathertype == "Clear") {screen.setBackgroundResource(R.drawable.clear_winter)}
-                    if (temperature < -8 && weathertype == "Clear") {screen.setBackgroundResource(R.drawable.clear_winter_cold)}
+                    if (temperature < 0 && weatherType == "Clear") {screen.setBackgroundResource(R.drawable.clear_winter)}
+                    if (temperature < -8 && weatherType == "Clear") {screen.setBackgroundResource(R.drawable.clear_winter_cold)}
                 }
             }
             catch (e:JSONException) {
@@ -142,5 +186,23 @@ class MainActivity : AppCompatActivity() {
                 loader.visibility = View.GONE
             }
         }
+    }
+
+    private fun taskLoadUp(query:String) {
+        if (Function.isNetworkAvailable(applicationContext))
+        {
+            val task = DownloadWeather()
+            task.execute(query)
+            setFavouriteCheckboxValue(query)
+        }
+        else
+        {
+            Toast.makeText(applicationContext, "No Internet Connection", Toast.LENGTH_LONG).show()
+        }
+    }
+
+    private fun setFavouriteCheckboxValue (city : String)
+    {
+        add_to_favourites.isChecked = FavouriteCities.getCities().any { row -> row.cityName == city.toUpperCase()}
     }
 }

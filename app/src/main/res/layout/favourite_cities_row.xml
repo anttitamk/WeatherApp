@@ -1,24 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/main_row"
+              xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto" android:orientation="horizontal"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
     <ImageView
-            android:layout_width="85dp"
-            android:layout_height="50dp" app:srcCompat="@android:drawable/btn_star_big_on"
-            android:id="@+id/imageView" android:layout_weight="1"/>
+            android:id="@+id/image_view"
+            android:layout_width="107dp"
+            android:layout_height="43dp"
+            android:layout_weight="1"
+            android:contentDescription="@string/Favourite"
+            app:srcCompat="@android:drawable/star_big_on" />
+
     <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" android:layout_weight="1">
+            android:layout_width="411dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
         <TextView
-                android:text="TextView"
+                android:id="@+id/city_name"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:id="@+id/cityName"/>
+                android:layout_height="wrap_content"
+                android:text="@string/CityName"
+                android:textColor="@color/colorAccent"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+
         <TextView
-                android:text="TextView"
+                android:id="@+id/country_name"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:id="@+id/countryName"/>
+                android:layout_height="wrap_content"
+                android:text="@string/CountryName"
+                android:textSize="15sp" />
+
+
     </LinearLayout>
 </LinearLayout>

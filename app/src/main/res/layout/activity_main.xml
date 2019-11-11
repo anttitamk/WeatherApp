@@ -139,14 +139,28 @@
             android:layout_marginStart="8dp" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginLeft="8dp" app:layout_constraintHorizontal_bias="0.488"/>
 
+    <CheckBox
+            android:id="@+id/add_to_favourites"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:text="@string/Favourite"
+            app:layout_constraintBottom_toTopOf="@+id/cityList"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/pressure_field"
+            app:layout_constraintVertical_bias="0.674" />
+
     <Button
-            android:text="Favourite cities"
+            android:id="@+id/cityList"
             android:layout_width="139dp"
             android:layout_height="39dp"
-            android:id="@+id/cityList"
-            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="656dp" app:layout_constraintEnd_toEndOf="parent"
-            android:background="@drawable/button_style" app:layout_constraintHorizontal_bias="0.501"/>
-
+            android:background="@drawable/button_style"
+            android:text="Favourite cities"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/pressure_field"
+            app:layout_constraintVertical_bias="0.732" />
 
 </android.support.constraint.ConstraintLayout>
