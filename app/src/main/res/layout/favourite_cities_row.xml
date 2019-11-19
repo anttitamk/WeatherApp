@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/main_row"
-              xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto" android:orientation="horizontal"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+<LinearLayout android:id="@+id/main_row"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <ImageView
             android:id="@+id/image_view"
@@ -12,6 +12,7 @@
             android:layout_height="43dp"
             android:layout_weight="1"
             android:contentDescription="@string/Favourite"
+            android:layout_marginLeft="4dp"
             app:srcCompat="@android:drawable/star_big_on" />
 
     <LinearLayout
@@ -25,16 +26,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/CityName"
-                android:textColor="@color/colorAccent"
                 android:textSize="17sp"
-                android:textStyle="bold" />
+                android:layout_marginTop="3dp"
+                android:layout_marginStart="5dp"/>
 
         <TextView
                 android:id="@+id/country_name"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="15dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginBottom="6dp"
                 android:text="@string/CountryName"
-                android:textSize="15sp" />
+                android:textSize="12sp" />
 
 
     </LinearLayout>
