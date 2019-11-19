@@ -43,7 +43,7 @@ class FavouriteCities : AppCompatActivity() {
 
     companion object Cities {
 
-        var cityAndCountryRows = ArrayList<RowItem>()
+        private var cityAndCountryRows = ArrayList<RowItem>()
 
         // adds city to favourites
         fun addToFavourites(city : String, country : String) : ArrayList<RowItem> {

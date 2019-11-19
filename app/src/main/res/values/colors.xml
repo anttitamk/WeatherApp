@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="textColorPrimary">#F4F4F4</color>
     <color name="colorPrimary">#484d54</color>
     <color name="colorPrimaryDark">#25272b</color>
     <color name="colorAccent">#000000</color>
+    <color name="colorDefaultBlue">#4059AD</color>
     <color name="listViewBackground">@android:color/transparent</color>
 </resources>
